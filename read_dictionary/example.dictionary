@@ -1,0 +1,9 @@
+This is a comment before the dictionary
+
+{
+    'key1': 'value1', # This is an inline comment
+    'key2': ['value2a', 'value2b', 'value2c'],
+    'key3': '{value3a, value3b}' 
+}
+
+This is a comment after the dictionary
