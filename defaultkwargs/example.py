@@ -34,6 +34,5 @@ if __name__ == '__main__':
     print( '{} - {} - {}'.format(b.name, b.city, b.dob))
     print()
 
-    b = A()
     b.print()
     b.print(font='Comic Neue', size='10')
