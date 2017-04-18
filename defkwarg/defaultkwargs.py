@@ -1,3 +1,5 @@
+from functools import wraps
+
 def _restrictive_update(old_dict, new_dict):
     '''Update a dictionary, but throw an error if trying to add new keys'''
 
@@ -9,8 +11,10 @@ def _restrictive_update(old_dict, new_dict):
         old_dict.update(new_dict)
 
 def defaultkwargs(f):
+
+    @wraps(f)
     def wrapper(self, *args, **kwargs):
-        new_kwargs = dict(self._defaults)
+        new_kwargs = dict(self._defaults) # Make a deep copy
         _restrictive_update(new_kwargs, kwargs)
         return f(self, *args, **new_kwargs)
 
@@ -18,7 +22,7 @@ def defaultkwargs(f):
     
 
 class A(object):
-    """Example object that gets wrapped"""
+    '''Example object that uses @defaultkwargs wrapper'''
     _defaults = {
         'name':'Allan',
         'city':'Berlin',
@@ -27,9 +31,9 @@ class A(object):
 
     @defaultkwargs
     def __init__(self, *args, **kwargs):
-    ''' Since this is wrapped with @defaultkwargs, all keys in _defaults
-        will exist in kwargs
-    '''
+        ''' Since this is wrapped with @defaultkwargs, all keys in _defaults
+            will exist in kwargs
+        '''
         self.name = kwargs['name']
         self.city = kwargs['city']
         self.dob = kwargs['dob']
