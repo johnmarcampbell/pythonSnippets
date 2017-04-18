@@ -1,11 +1,12 @@
 from functools import wraps
 
+# Inspired by create_cookies() in the requests module
 def _restrictive_update(old_dict, new_dict):
     '''Update a dictionary, but throw an error if trying to add new keys'''
 
     new_keys = set(new_dict) - set(old_dict)
     if new_keys:
-        err = 'Got unexpected keyword arguments: {}.'
+        err = 'Got invalid keyword arguments: {}.'
         raise AttributeError( err.format(list(new_keys)) )
     else:
         old_dict.update(new_dict)
